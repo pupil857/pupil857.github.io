@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>NCTF2021ezjava出题思路 | Pupi1&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言先说说这个的题的背景吧，构思挺久的题目。 当时在学习java安全的时候在看java代码审计那本书，里面有提到jeecms对压缩包的不正确解压导致的目录穿越，当时觉得这个点挺有趣的就打算来出一下，但是直接上传jsp太简单了肯定不行。于是在学习java写文件rce的时候看到了些文章   主要就是对这2篇文章研究了一下进行复现，发现是个很好的方法，一下就拓宽了攻击面。所以打算用这个点来作为最后的rc">
+  <meta name="description" content="NCTF2021ezjava的出题思路">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NCTF2021ezjava出题思路">
 <meta property="og:url" content="http://example.com/2021/11/30/NCTF2021ezjava%E5%87%BA%E9%A2%98%E6%80%9D%E8%B7%AF/index.html">
 <meta property="og:site_name" content="Pupi1&#39;s Blog">
-<meta property="og:description" content="前言先说说这个的题的背景吧，构思挺久的题目。 当时在学习java安全的时候在看java代码审计那本书，里面有提到jeecms对压缩包的不正确解压导致的目录穿越，当时觉得这个点挺有趣的就打算来出一下，但是直接上传jsp太简单了肯定不行。于是在学习java写文件rce的时候看到了些文章   主要就是对这2篇文章研究了一下进行复现，发现是个很好的方法，一下就拓宽了攻击面。所以打算用这个点来作为最后的rc">
+<meta property="og:description" content="NCTF2021ezjava的出题思路">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2021/11/30/NCTF2021ezjava%E5%87%BA%E9%A2%98%E6%80%9D%E8%B7%AF/image-20211129132240027.png">
 <meta property="article:published_time" content="2021-11-30T04:54:10.000Z">
-<meta property="article:modified_time" content="2021-11-30T05:20:35.546Z">
+<meta property="article:modified_time" content="2021-11-30T05:33:59.401Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -171,7 +171,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>先说说这个的题的背景吧，构思挺久的题目。</p>
+        <p><strong>NCTF2021ezjava的出题思路</strong></p>
+<span id="more"></span>
+
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>先说说这个的题的背景吧，构思挺久的题目。</p>
 <p>当时在学习java安全的时候在看java代码审计那本书，里面有提到jeecms对压缩包的不正确解压导致的目录穿越，当时觉得这个点挺有趣的就打算来出一下，但是直接上传jsp太简单了肯定不行。于是在学习java写文件rce的时候看到了些文章</p>
 <p><a target="_blank" rel="noopener" href="https://landgrey.me/blog/22/"></a></p>
 <p><a target="_blank" rel="noopener" href="https://threedr3am.github.io/2021/04/14/JDK8%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84SpringBoot%20RCE/"></a></p>
