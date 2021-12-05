@@ -6,16 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021 | Pupi1&#39;s Blog</title>
+  <title>记自己的第一个漏洞 | Pupi1&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Pupi1&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/2021/index.html">
+  <meta name="description" content="背景当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！ 过程因为其实老师并没有给我资产列表什么的，所有也只能自己收集，那么就是先收集一下子域名，爆破一下ip段。然后先粗略看了下主站，主站一般是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记自己的第一个漏洞">
+<meta property="og:url" content="http://example.com/2021/12/05/cndv/index.html">
 <meta property="og:site_name" content="Pupi1&#39;s Blog">
+<meta property="og:description" content="背景当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！ 过程因为其实老师并没有给我资产列表什么的，所有也只能自己收集，那么就是先收集一下子域名，爆破一下ip段。然后先粗略看了下主站，主站一般是">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205142244436.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/Users/14843/AppData/Roaming/Typora/typora-user-images/image-20211205142736012.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205143027428.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/BUU9KCXP3_~L%7DJTVBO%606AJR.jpg">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205144439589.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205145747736.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205150629097.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205150910985.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205151226708.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205151603602.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205151648795.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205151724617.png">
+<meta property="article:published_time" content="2021-12-05T06:21:53.000Z">
+<meta property="article:modified_time" content="2021-12-05T07:23:32.321Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/12/05/cndv/image-20211205142244436.png">
   
     <link rel="alternative" href="/atom.xml" title="Pupi1&#39;s Blog" type="application/atom+xml">
   
@@ -145,103 +162,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-cndv" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      记自己的第一个漏洞
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/12/05/cndv/" class="archive-article-date">
+
+        
+        <a href="/2021/12/05/cndv/" class="archive-article-date">
   	<time datetime="2021-12-05T06:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-05</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/12/05/cndv/">记自己的第一个漏洞</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！</p>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>因为其实老师并没有给我资产列表什么的，所有也只能自己收集，那么就是先收集一下子域名，爆破一下ip段。然后先粗略看了下主站，主站一般是不会有什么容易发现的漏洞的，一般都是静态页面，去展示校园生活和一些资料，可以交互的点不多。所以我的还是放在旁站了上，扫到了一个视频管理的web应用，然后去看看有什么交互点。上来先试一下后台管理，欸，一试就有~</p>
+<p><img src="/2021/12/05/cndv/image-20211205142244436.png" alt="image-20211205142244436"></p>
+<p>习惯行先试试弱密码，好家伙直接就进去了🤣，（弱密码yyds！</p>
+<p>然后在后台看了一圈，就看到有个上传可以值得尝试一下。</p>
+<p>那就是正常的测试文件上传绕过的那些姿势，</p>
+<p><img src="/2021/12/05/cndv/Users\14843\AppData\Roaming\Typora\typora-user-images\image-20211205142736012.png" alt="image-20211205142736012"></p>
+<p>正常的图片后缀是可以上传的，但是正常的后缀肯定没有用，直接去测试jsp</p>
+<p><img src="/2021/12/05/cndv/image-20211205143027428.png" alt="image-20211205143027428"></p>
+<p>这里回显的不允许上传，那么大概率是黑名单了，那可能存在绕过的方法。这里通过使用<code>/</code>就可以去绕过他黑名单的限制，因为<code>/</code>在linux中文件名处末尾会被处理为空，就可以绕过他的黑名单检测，成功上传，通过上传正常文件去获取上传的文件位置，然后就可以直接去链接我们上传的木马。那么到这里就发现了一个任意文件上传的漏洞，</p>
+<p>这里是jsp的站点，一般在java写的站中权限验证写的有问题很容易导致未授权访问，所以就尝试一下，清除当前cookie直接对这个接口发包看是否可以正常上传文件。</p>
+<p>测试后发现确实是存在这样一个问题的，那么这个洞就从后台任意文件上传升级到了前台任意文件上传。</p>
+<p>当时发现这个漏洞以后，直接芜湖起飞<img src="/2021/12/05/cndv/BUU9KCXP3_~L%7DJTVBO%606AJR.jpg" alt="img"></p>
+<p>那还用说，这不去fofa看看漏洞影响范围。fofa搜了一下差不多有500多个站点用这个应用，我随便测了一下前5页（没钱买会员呜呜</p>
+<p>除去一些重复的30个中差不多有10个都可以获取权限，而且获取到的都是root权限。我这个高兴的啊，哈哈哈哈哈哈哈，想着这是不是可以去申请个编号，然后去cndv查了一下，凸(艹皿艹 )</p>
+<p><img src="/2021/12/05/cndv/image-20211205144439589.png" alt="image-20211205144439589"></p>
+<p>我当时是9月底了，看到有人交了，心态炸了。难道我的第一个漏洞就要和我插肩而过了么 QAQ~~</p>
+<h3 id="转机"><a href="#转机" class="headerlink" title="转机"></a>转机</h3><p>我当时没有放弃，把上面提到的漏洞给我老师报告了后，我又继续渗透，去看看有没有其他的漏洞，然后又会到最初的开始，又重新扫了一遍网站。这次着重看了一下有ava关键词的站，感觉他们写的多半还有洞。</p>
+<p>果不其然我发现了ava的另一个管理站点</p>
+<p><img src="/2021/12/05/cndv/image-20211205145747736.png" alt="image-20211205145747736"></p>
+<p>那么肯定还是先弱密码试他一波，不愧是我老师，这两个站点的弱密码都是一样的。</p>
+<p>先浏览一波站点主要功能，也有一些上传，什么的但是多次尝试发现这里不存在文件上传的漏洞，这里后端是用的cgi，是c写的，并且文件上传的文件名是不可控的，那在黑盒的情况下很难去继续发现绕过的方式。那这也不能就放弃吧，就一个一个功能点去看，主要还是看文件操作部分，有没有什么敏感的参数是可以控制的。</p>
+<p>终于在一番寻找中发现了在系统设置中有个片头片尾的下载功能，这里的下载文件名我们可以控制</p>
+<p><img src="/2021/12/05/cndv/image-20211205150629097.png" alt="image-20211205150629097"></p>
+<p>看到这个path的参数很敏感，就感觉这里可以进行任意文件下载，</p>
+<p><img src="/2021/12/05/cndv/image-20211205150910985.png" alt="image-20211205150910985"></p>
+<p>果不其然这里可以下载任意文件，这里可以直接下载到用户密码的MD5值，还是有点危害的。</p>
+<p>那么按照他们公司的尿性，多半这里也是可以未授权访问的，果不其然，把cookie全部删掉后也可以去触发这个漏洞</p>
+<p><img src="/2021/12/05/cndv/image-20211205151226708.png" alt="image-20211205151226708"></p>
+<p>那么到这我们就获得了一个前台任意文件下载的漏洞，然后也一样去fofa看一下影响范围，差不多有150个结果，每一个都存在这个漏洞，好家伙这波终于可以申请一个漏洞编号了。</p>
+<p>然后我开开心心的去申请了一个漏洞，半个月后给了我反馈（慢是真的慢</p>
+<p><img src="/2021/12/05/cndv/image-20211205151603602.png" alt="image-20211205151603602"></p>
+<p><img src="/2021/12/05/cndv/image-20211205151648795.png" alt="image-20211205151648795"></p>
+<p><img src="/2021/12/05/cndv/image-20211205151724617.png" alt="image-20211205151724617"></p>
+<p>至此我的第一个漏洞终于有了他的编号（不过当时报告没有点公开，下次一定点公开</p>
+<p>虽然这些漏洞的技术含量不高，比起现在我们打的CTF真的还是简单了许多，更多的是在如何去做信息收集，发现这些漏洞，利用真的很简单了。这也许也是CTF和实战的一点区别吧。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这差不多挖了半个月吧，从一开始的发现文件上传，到最后的文件下载，学习到了很多实战的知识，拿下了自己的第一个漏洞，虽然漏洞技术含量不高，对于我来说也是算是一个里程碑了。</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/12/05/cndv/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/30/NCTF2021ezjava%E5%87%BA%E9%A2%98%E6%80%9D%E8%B7%AF/" class="archive-article-date">
-  	<time datetime="2021-11-30T04:54:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/11/30/NCTF2021ezjava%E5%87%BA%E9%A2%98%E6%80%9D%E8%B7%AF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NCTF2021ezjava出题思路</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/30/NCTF2021ezjava%E5%87%BA%E9%A2%98%E6%80%9D%E8%B7%AF/">NCTF2021ezjava出题思路</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/30/2021%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91webwp/" class="archive-article-date">
-  	<time datetime="2021-11-30T04:30:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/30/2021%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91webwp/">2021西湖论剑webwp</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -264,8 +370,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
