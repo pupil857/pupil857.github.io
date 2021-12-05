@@ -8,16 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>记自己的第一个漏洞 | Pupi1&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！ 过程因为其实老师并没有给我资产列表什么的，所有也只能自己收集，那么就是先收集一下子域名，爆破一下ip段。然后先粗略看了下主站，主站一般是">
+  <meta name="description" content="背景当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记自己的第一个漏洞">
 <meta property="og:url" content="http://example.com/2021/12/05/cndv/index.html">
 <meta property="og:site_name" content="Pupi1&#39;s Blog">
-<meta property="og:description" content="背景当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！ 过程因为其实老师并没有给我资产列表什么的，所有也只能自己收集，那么就是先收集一下子域名，爆破一下ip段。然后先粗略看了下主站，主站一般是">
+<meta property="og:description" content="背景当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205142244436.png">
-<meta property="og:image" content="http://example.com/2021/12/05/cndv/Users/14843/AppData/Roaming/Typora/typora-user-images/image-20211205142736012.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205142736012.png">
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205143027428.png">
+<meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205153014027.png">
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/BUU9KCXP3_~L%7DJTVBO%606AJR.jpg">
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205144439589.png">
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205145747736.png">
@@ -28,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205151648795.png">
 <meta property="og:image" content="http://example.com/2021/12/05/cndv/image-20211205151724617.png">
 <meta property="article:published_time" content="2021-12-05T06:21:53.000Z">
-<meta property="article:modified_time" content="2021-12-05T07:23:32.321Z">
+<meta property="article:modified_time" content="2021-12-05T07:32:15.352Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -183,25 +184,30 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>当时假期，我回去看我高中老师，和我们老师聊了好多事情，然后聊着聊着，我那个老师是信息办的主任，我最近也在做渗透测试什么的，就和老师说了一下去测试了一下我们学校的网站，然后在这个过程中就发现了这个第一个漏洞。本次中提到的所有漏洞均以修复，请勿恶意攻击他人网站！</p>
+<span id="more"></span>
+
 <h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>因为其实老师并没有给我资产列表什么的，所有也只能自己收集，那么就是先收集一下子域名，爆破一下ip段。然后先粗略看了下主站，主站一般是不会有什么容易发现的漏洞的，一般都是静态页面，去展示校园生活和一些资料，可以交互的点不多。所以我的还是放在旁站了上，扫到了一个视频管理的web应用，然后去看看有什么交互点。上来先试一下后台管理，欸，一试就有~</p>
-<p><img src="/2021/12/05/cndv/image-20211205142244436.png" alt="image-20211205142244436"></p>
+<img src="/2021/12/05/cndv/image-20211205142244436.png" alt="image-20211205142244436" style="zoom:50%;">
+
 <p>习惯行先试试弱密码，好家伙直接就进去了🤣，（弱密码yyds！</p>
 <p>然后在后台看了一圈，就看到有个上传可以值得尝试一下。</p>
 <p>那就是正常的测试文件上传绕过的那些姿势，</p>
-<p><img src="/2021/12/05/cndv/Users\14843\AppData\Roaming\Typora\typora-user-images\image-20211205142736012.png" alt="image-20211205142736012"></p>
+<img src="/2021/12/05/cndv/image-20211205142736012.png" alt="image-20211205142736012" style="zoom: 33%;">
+
 <p>正常的图片后缀是可以上传的，但是正常的后缀肯定没有用，直接去测试jsp</p>
 <p><img src="/2021/12/05/cndv/image-20211205143027428.png" alt="image-20211205143027428"></p>
 <p>这里回显的不允许上传，那么大概率是黑名单了，那可能存在绕过的方法。这里通过使用<code>/</code>就可以去绕过他黑名单的限制，因为<code>/</code>在linux中文件名处末尾会被处理为空，就可以绕过他的黑名单检测，成功上传，通过上传正常文件去获取上传的文件位置，然后就可以直接去链接我们上传的木马。那么到这里就发现了一个任意文件上传的漏洞，</p>
 <p>这里是jsp的站点，一般在java写的站中权限验证写的有问题很容易导致未授权访问，所以就尝试一下，清除当前cookie直接对这个接口发包看是否可以正常上传文件。</p>
-<p>测试后发现确实是存在这样一个问题的，那么这个洞就从后台任意文件上传升级到了前台任意文件上传。</p>
-<p>当时发现这个漏洞以后，直接芜湖起飞<img src="/2021/12/05/cndv/BUU9KCXP3_~L%7DJTVBO%606AJR.jpg" alt="img"></p>
+<p><img src="/2021/12/05/cndv/image-20211205153014027.png" alt="image-20211205153014027"></p>
+<p>测试后发现确实是存在这样一个问题的，那么这个洞就从后台任意文件上传升级到了前台任意文件上传。当时发现这个漏洞以后，直接芜湖起飞<img src="/2021/12/05/cndv/BUU9KCXP3_~L}JTVBO`6AJR.jpg" alt="img" style="zoom: 67%;"></p>
 <p>那还用说，这不去fofa看看漏洞影响范围。fofa搜了一下差不多有500多个站点用这个应用，我随便测了一下前5页（没钱买会员呜呜</p>
 <p>除去一些重复的30个中差不多有10个都可以获取权限，而且获取到的都是root权限。我这个高兴的啊，哈哈哈哈哈哈哈，想着这是不是可以去申请个编号，然后去cndv查了一下，凸(艹皿艹 )</p>
 <p><img src="/2021/12/05/cndv/image-20211205144439589.png" alt="image-20211205144439589"></p>
 <p>我当时是9月底了，看到有人交了，心态炸了。难道我的第一个漏洞就要和我插肩而过了么 QAQ~~</p>
 <h3 id="转机"><a href="#转机" class="headerlink" title="转机"></a>转机</h3><p>我当时没有放弃，把上面提到的漏洞给我老师报告了后，我又继续渗透，去看看有没有其他的漏洞，然后又会到最初的开始，又重新扫了一遍网站。这次着重看了一下有ava关键词的站，感觉他们写的多半还有洞。</p>
 <p>果不其然我发现了ava的另一个管理站点</p>
-<p><img src="/2021/12/05/cndv/image-20211205145747736.png" alt="image-20211205145747736"></p>
+<img src="/2021/12/05/cndv/image-20211205145747736.png" alt="image-20211205145747736" style="zoom: 33%;">
+
 <p>那么肯定还是先弱密码试他一波，不愧是我老师，这两个站点的弱密码都是一样的。</p>
 <p>先浏览一波站点主要功能，也有一些上传，什么的但是多次尝试发现这里不存在文件上传的漏洞，这里后端是用的cgi，是c写的，并且文件上传的文件名是不可控的，那在黑盒的情况下很难去继续发现绕过的方式。那这也不能就放弃吧，就一个一个功能点去看，主要还是看文件操作部分，有没有什么敏感的参数是可以控制的。</p>
 <p>终于在一番寻找中发现了在系统设置中有个片头片尾的下载功能，这里的下载文件名我们可以控制</p>
@@ -210,7 +216,8 @@
 <p><img src="/2021/12/05/cndv/image-20211205150910985.png" alt="image-20211205150910985"></p>
 <p>果不其然这里可以下载任意文件，这里可以直接下载到用户密码的MD5值，还是有点危害的。</p>
 <p>那么按照他们公司的尿性，多半这里也是可以未授权访问的，果不其然，把cookie全部删掉后也可以去触发这个漏洞</p>
-<p><img src="/2021/12/05/cndv/image-20211205151226708.png" alt="image-20211205151226708"></p>
+<img src="/2021/12/05/cndv/image-20211205151226708.png" alt="image-20211205151226708" style="zoom: 33%;">
+
 <p>那么到这我们就获得了一个前台任意文件下载的漏洞，然后也一样去fofa看一下影响范围，差不多有150个结果，每一个都存在这个漏洞，好家伙这波终于可以申请一个漏洞编号了。</p>
 <p>然后我开开心心的去申请了一个漏洞，半个月后给了我反馈（慢是真的慢</p>
 <p><img src="/2021/12/05/cndv/image-20211205151603602.png" alt="image-20211205151603602"></p>
