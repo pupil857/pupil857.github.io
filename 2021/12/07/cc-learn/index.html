@@ -18,9 +18,9 @@
 <meta property="og:image" content="http://example.com/2021/12/07/cc-learn/image-20211207165300195.png">
 <meta property="og:image" content="http://example.com/2021/12/07/cc-learn/image-20211207171728677.png">
 <meta property="og:image" content="http://example.com/2021/12/07/cc-learn/image-20211207171838361.png">
-<meta property="og:image" content="http://example.com/2021/12/07/cc-learn/image-20211207194852197.png">
+<meta property="og:image" content="http://example.com/2021/12/07/cc-learn/image-20211207202524233.png">
 <meta property="article:published_time" content="2021-12-07T08:40:26.000Z">
-<meta property="article:modified_time" content="2021-12-07T12:21:14.925Z">
+<meta property="article:modified_time" content="2021-12-07T12:26:04.906Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -237,7 +237,7 @@
 <p>lazymap是要去找到一个可以触发他get方法的地方。</p>
 <p>我们看到在</p>
 <p><code>sun.reflect.annotation.AnnotationInvocationHandler</code>中的invoke方法中存在触发get方法的语句</p>
-<p><img src="/2021/12/07/cc-learn/image-20211207194852197.png" alt="image-20211207194852197"></p>
+<p><img src="/2021/12/07/cc-learn/image-20211207202524233.png" alt="image-20211207202524233"></p>
 <p>那么我们改一下触发点就好了</p>
 <p>这里用到了动态代理的知识，总结起来的一句话就是被动态代理的对象调用任意方法都会调用对应的InvocationHandler 的 <code>invoke</code> 方法。</p>
 <p>那构造的思路的就有了，在使用带有装饰器的 LazyMap 初始化 AnnotationInvocationHandler 之前，先使用  InvocationHandler 代理一下 LazyMap，这样反序列化 AnnotationInvocationHandler 时，调用  LazyMap 值的 setValue 方法之前会调用代理类的 invoke 方法，触发 LazyMap 的 get 方法。</p>
