@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022/3 | Pupi1&#39;s Blog</title>
+  <title>RMI学习笔记 | Pupi1&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Pupi1&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/2022/03/index.html">
+  <meta name="description" content="前言最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。 RMIRMI全称是Remote Method Invocation（远程⽅法调⽤），目的是为了让两个隔离的java虚拟机，如虚拟机A能够调用到虚拟机B中的对象，而且这些虚拟机可以不存在于同一台主机上。 RMI存在三个主体  RMI Registry：本质是一个 Map，存储键值对映射，用于客户端查询要调用的方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RMI学习笔记">
+<meta property="og:url" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Pupi1&#39;s Blog">
+<meta property="og:description" content="前言最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。 RMIRMI全称是Remote Method Invocation（远程⽅法调⽤），目的是为了让两个隔离的java虚拟机，如虚拟机A能够调用到虚拟机B中的对象，而且这些虚拟机可以不存在于同一台主机上。 RMI存在三个主体  RMI Registry：本质是一个 Map，存储键值对映射，用于客户端查询要调用的方">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image.png">
+<meta property="og:image" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20211210231259412.png">
+<meta property="article:published_time" content="2022-03-18T07:09:15.000Z">
+<meta property="article:modified_time" content="2022-03-23T01:43:29.305Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image.png">
   
     <link rel="alternative" href="/atom.xml" title="Pupi1&#39;s Blog" type="application/atom+xml">
   
@@ -145,76 +152,217 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-RMI学习笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      RMI学习笔记
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+
+        
+        <a href="/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
   	<time datetime="2022-03-18T07:09:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-18</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">RMI学习笔记</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。</p>
+<h3 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h3><p>RMI全称是Remote Method Invocation（远程⽅法调⽤），目的是为了让两个隔离的java虚拟机，如虚拟机A能够调用到虚拟机B中的对象，而且这些虚拟机可以不存在于同一台主机上。</p>
+<p>RMI存在三个主体</p>
+<ul>
+<li>RMI Registry：本质是一个 Map，存储键值对映射，用于客户端查询要调用的方法的引用，在低版本的JDK中，Server的Registry是可以不在一个服务器上的，而在高版本的JDK中，只能在一个服务器上，否则没法注册成功。</li>
+<li>RMI Client：客户端负责调用服务端的方法。</li>
+<li>RMI Server：远程调用 的提供者，是代码真正执行的地方，执行结束返回给客户端一个执行的结果。<img src="/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image.png" alt="image"></li>
+</ul>
+<p>RMI Registry就像⼀个网关，他是不会执行远程方法的，但RMI Server可以在上面注册⼀个Name到对象的绑定关系，RMI Client通过Name向RMI Registry查询，得到这个绑定关系，然后再连接RMI Server，最后，远程方法实际上在RMI Server上调用。</p>
+<p>demo：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.Naming;</span><br><span class="line"><span class="keyword">import</span> java.rmi.Remote;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.server.UnicastRemoteObject;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RMIServer</span> </span>&#123;</span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IRemoteHelloWorld</span> <span class="keyword">extends</span> <span class="title">Remote</span> </span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RemoteHelloWorld</span> <span class="keyword">extends</span> <span class="title">UnicastRemoteObject</span> <span class="keyword">implements</span></span></span><br><span class="line"><span class="class"><span class="title">IRemoteHelloWorld</span> </span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="title">RemoteHelloWorld</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line"> <span class="keyword">super</span>();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line"> System.out.println(<span class="string">&quot;call from&quot;</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="string">&quot;Hello world&quot;</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"> RemoteHelloWorld h = <span class="keyword">new</span> RemoteHelloWorld();</span><br><span class="line"> LocateRegistry.createRegistry(<span class="number">1099</span>);</span><br><span class="line"> Naming.rebind(<span class="string">&quot;rmi://127.0.0.1:1099/Hello&quot;</span>, h);<span class="comment">//实现Registry</span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;  <span class="keyword">new</span> RMIServer().start();</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>这里就可以发现Registry和Server是写在一起的</p>
+<p>这里通过一般的rmi攻击方式去解释一下流程。</p>
+<ol>
+<li>先由Client发起对Registry的请求<code>lookup(rmi://xxx.xxx.xxx/xxx)</code>由于我们恶意的Registry已经注册了，指向了我们的恶意类上，然后返回server的地址端口。</li>
+<li>Client再发起对server的请求，开始正式调用远程方法这里会返回<code>codebase</code>的参数。</li>
+<li>通过参数指定的地址去下载字节码，并且会实例化，那么恶意代码就会在实例化的时候被执行。</li>
+</ol>
+<p>这种攻击rmi的方法只能在低版本的jdk实现</p>
+<h3 id="JRMP"><a href="#JRMP" class="headerlink" title="JRMP"></a>JRMP</h3><p>jrmp是一种协议，rmi就是基于这个协议去传输的。我们一般通过jrmp去攻击的是DGC  </p>
+<p>分布式垃圾回收，又称DGC，RMI使用DGC来做垃圾回收，因为跨虚拟机的情况下要做垃圾回收没办法使用原有的机制。我们使用的远程对象只有在客户端和服务端都不受引用时才会结束生命周期。</p>
+<p>而既然RMI依赖于DGC做垃圾回收，那么在RMI服务中必然会有DGC层，在yso中攻击DGC层对应的是JRMPClient,其实这里的攻击流程和攻击rmi的差不多yso中的实现主要是利用了报错信息返回的反序列化。通过反序列化先让目标机器发起对恶意服务器的rmi链接，然后通过jrmp返回反序列化的对象。这里反序列化的 是代理类，他会用代理类的反序列化方法去反序列化，一般的过滤方式拦不住这种底层的反序列化。具体原理就不当搬运工了，已经有很多师傅写的很清楚<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/197829#h2-16%EF%BC%8Chttps://redmango.top/article/70">https://www.anquanke.com/post/id/197829#h2-16，https://redmango.top/article/70</a></p>
+<p>但是，<strong>在jdk6u141, 7u131, 8u121之后，出现了JEP290规范之后，无论是DGC还是前面提到的bind等方法去攻击Registry的方式都失效了。</strong></p>
+<h3 id="JEP290"><a href="#JEP290" class="headerlink" title="JEP290"></a>JEP290</h3><p>官方将本属于JDK9的特性进行了向下兼容，于是在jdk6，7，8中也出现了这一特性，分别对应于jdk6u141, 7u131, 8u121之后的版本。</p>
+<p>JEP290是为了过滤传入的序列化数据而产生的规范，开发者可通过配置自定义过滤器，全局过滤器或者使用内置过滤器来对传入的序列化数据做过滤。</p>
+<p>其中在RMIRegistryImpl中采用了白名单机制来限制类：<img src="/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20211210231259412.png" alt="image-20211210231259412"></p>
+<p>具体可以看：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10170">https://xz.aliyun.com/t/10170</a></p>
+<p>有过滤那就有绕过，bypass JEP290主要就是利用了jrmp去实现的，因为jep290是不限制客户端的反序列化的，于是就利用白名单中的类去发起链接来造成反序列化</p>
+<p>绕过JEP290的姿势最高只能打到8u241，再高的版本都因为jep290的限制难以利用反序列化去攻击了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp ysoserial.jar ysoserial.exploit.JRMPClient 127.0.0.1 1099 CommonsCollections7 &quot;open /System/Applications/Calculator.app&quot;</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-0.0.6-SNAPSHOT-all.jar JRMPClient xxx.xxx.xxx.xxx:xxx</span><br></pre></td></tr></table></figure>
+
+<p>目前发现这种方式用来打rmi客户端很好使，版本限制少。</p>
+<p>总结了一些rmi攻击的相关知识，发现java安全还有好多要学习啊（太卷了</p>
+<p>参考链接：</p>
+<p>Java安全漫谈</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2223">JAVA RMI 反序列化流程原理分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7930">针对RMI服务的九重攻击 - 上</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7932">针对RMI服务的九重攻击 - 下</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6660">RMI-反序列化</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.sometimenaive.com/2020/07/16/rmi-exploit-summary/">rmi利用总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/197829">浅谈Java RMI Registry安全问题</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7079">基于Java反序列化RCE - 搞懂RMI、JRMP、JNDI</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7264">搞懂RMI、JRMP、JNDI-终结篇</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.sometimenaive.com/2020/09/02/attack-rmi-registry-and-server-with-socket/">attack-rmi-registry-and-server-with-socket</a></p>
+<p><a target="_blank" rel="noopener" href="https://mogwailabs.de/en/blog/2019/03/attacking-java-rmi-services-after-jep-290/">attacking-java-rmi-services-after-jep-290</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Afant1/RemoteObjectInvocationHandler">Afant1-RemoteObjectInvocationHandler</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1689/">浅谈JEP290</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnpanda.net/sec/968.html">JEP290的基本概念</a></p>
+<p><a target="_blank" rel="noopener" href="https://redmango.top/article/70">https://redmango.top/article/70</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/jinjinshigekeaigui/qskpi5/ep8409#tf1vp">https://www.yuque.com/jinjinshigekeaigui/qskpi5/ep8409#tf1vp</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/08/ROME%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BE/" class="archive-article-date">
-  	<time datetime="2022-03-08T10:45:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-08</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2022/09/01/%E7%BD%91%E9%BC%8E%E6%9D%AFJAVA%E5%A4%8D%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          网鼎杯JAVA复现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/08/ROME%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ROME反序列化利用链</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/08/ROME%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BE/">ROME反序列化利用链</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -237,8 +385,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
