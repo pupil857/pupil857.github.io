@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>RMI学习笔记 | Pupi1&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。 RMIRMI全称是Remote Method Invocation（远程⽅法调⽤），目的是为了让两个隔离的java虚拟机，如虚拟机A能够调用到虚拟机B中的对象，而且这些虚拟机可以不存在于同一台主机上。 RMI存在三个主体  RMI Registry：本质是一个 Map，存储键值对映射，用于客户端查询要调用的方">
+  <meta name="description" content="前言最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RMI学习笔记">
 <meta property="og:url" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Pupi1&#39;s Blog">
-<meta property="og:description" content="前言最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。 RMIRMI全称是Remote Method Invocation（远程⽅法调⽤），目的是为了让两个隔离的java虚拟机，如虚拟机A能够调用到虚拟机B中的对象，而且这些虚拟机可以不存在于同一台主机上。 RMI存在三个主体  RMI Registry：本质是一个 Map，存储键值对映射，用于客户端查询要调用的方">
+<meta property="og:description" content="前言最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image.png">
 <meta property="og:image" content="http://example.com/2022/03/18/RMI%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20211210231259412.png">
 <meta property="article:published_time" content="2022-03-18T07:09:15.000Z">
-<meta property="article:modified_time" content="2022-03-23T01:43:29.305Z">
+<meta property="article:modified_time" content="2022-09-01T11:46:41.157Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -173,6 +173,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近遇到很多RMI,LDAP,JRMP的利用方式，原理都不是很明白，现在来梳理一下。</p>
+<span id="more"></span>
+
 <h3 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h3><p>RMI全称是Remote Method Invocation（远程⽅法调⽤），目的是为了让两个隔离的java虚拟机，如虚拟机A能够调用到虚拟机B中的对象，而且这些虚拟机可以不存在于同一台主机上。</p>
 <p>RMI存在三个主体</p>
 <ul>
@@ -207,8 +209,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-0.0.6-SNAPSHOT-all.jar JRMPClient xxx.xxx.xxx.xxx:xxx</span><br></pre></td></tr></table></figure>
 
 <p>目前发现这种方式用来打rmi客户端很好使，版本限制少。</p>
-<p>总结了一些rmi攻击的相关知识，发现java安全还有好多要学习啊（太卷了</p>
 <p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://redmango.top/article/70">https://redmango.top/article/70</a></p>
 <p>Java安全漫谈</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2223">JAVA RMI 反序列化流程原理分析</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7930">针对RMI服务的九重攻击 - 上</a></p>
