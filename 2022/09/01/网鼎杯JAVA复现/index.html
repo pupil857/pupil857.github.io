@@ -16,7 +16,7 @@
 <meta property="og:description" content="ez-http-server网鼎杯朱雀组web">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-01T09:41:12.000Z">
-<meta property="article:modified_time" content="2022-09-02T16:41:56.876Z">
+<meta property="article:modified_time" content="2022-09-02T16:53:25.651Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
 
 <h3 id="XMLDecoder"><a href="#XMLDecoder" class="headerlink" title="XMLDecoder"></a>XMLDecoder</h3><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10323">https://xz.aliyun.com/t/10323</a><br>其实也是用类加载器加载字节码，思路都差不多这里就不写具体的payload了</p>
 <h1 id="BadBean"><a href="#BadBean" class="headerlink" title="BadBean"></a>BadBean</h1><p>一个Hessian2反序列化的题<br>直接用了dubbo-2.7.14.jar，该版本存在一个可以直接触发toString的调用<a target="_blank" rel="noopener" href="https://paper.seebug.org/1814/">https://paper.seebug.org/1814/</a></p>
-<p>他自己写了给类中<br>![Pasted image 20220831215704](网鼎杯JAVA复现/Pasted image 20220831215704.png)<br>很明显可以调用任意get方法。然后根据上面那篇文章，复现一下前面的流程。</p>
+<p>他自己写了给类中<br>![image-20220831215704](网鼎杯JAVA复现/Pasted image 20220831215704.png)<br>很明显可以调用任意get方法。然后根据上面那篇文章，复现一下前面的流程。</p>
 <p>这里先在![Pasted image 20220831220431](网鼎杯JAVA复现/Pasted image 20220831220431.png)这个位置要触发readObjectDefinition方法，在该方法中调用readString![Pasted image 20220831220523](网鼎杯JAVA复现/Pasted image 20220831220523.png)<br>然后在不满足case的情况下![Pasted image 20220831220556](网鼎杯JAVA复现/Pasted image 20220831220556.png)<br>进入default <code>this.expect(&quot;string&quot;, tag);</code>中触发tostring。<br>也就是说，67满足了两个条件</p>
 <ol>
 <li> 在<code>Hessian2Input#readObject</code>中可以走到readString</li>
