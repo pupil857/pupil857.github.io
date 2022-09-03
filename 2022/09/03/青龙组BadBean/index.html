@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/Pasted%20image%2020220831215704.png">
 <meta property="article:published_time" content="2022-09-02T17:17:10.000Z">
-<meta property="article:modified_time" content="2022-09-03T11:35:36.537Z">
+<meta property="article:modified_time" content="2022-09-03T11:36:25.938Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -178,7 +178,9 @@
 <p>他自己写了给类中</p>
 <p><img src="https://raw.githubusercontent.com/pupil857/poto/main/img/Pasted%20image%2020220831215704.png"></p>
 <p>很明显可以调用任意get方法。然后根据上面那篇文章，复现一下前面的流程。</p>
-<p>这里先在![Pasted image 20220831220431](青龙组BadBean/Pasted image 20220831220431.png)这个位置要触发readObjectDefinition方法，在该方法中调用readString![Pasted image 20220831220523](青龙组BadBean/Pasted image 20220831220523.png)<br>然后在不满足case的情况下![Pasted image 20220831220556](青龙组BadBean/Pasted image 20220831220556.png)<br>进入default <code>this.expect(&quot;string&quot;, tag);</code>中触发tostring。<br>也就是说，67满足了两个条件</p>
+<p>这里先在</p>
+<p>![Pasted image 20220831220431](青龙组BadBean/Pasted image 20220831220431.png)</p>
+<p>这个位置要触发readObjectDefinition方法，在该方法中调用readString![Pasted image 20220831220523](青龙组BadBean/Pasted image 20220831220523.png)<br>然后在不满足case的情况下![Pasted image 20220831220556](青龙组BadBean/Pasted image 20220831220556.png)<br>进入default <code>this.expect(&quot;string&quot;, tag);</code>中触发tostring。<br>也就是说，67满足了两个条件</p>
 <ol>
 <li> 在<code>Hessian2Input#readObject</code>中可以走到readString</li>
 <li> 在readString可以进入<code>this.expect(&quot;string&quot;, tag)</code></li>
