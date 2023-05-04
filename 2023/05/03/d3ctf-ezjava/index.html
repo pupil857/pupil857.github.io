@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://example.com/2023/05/03/d3ctf-ezjava/2.png">
 <meta property="og:image" content="http://example.com/2023/05/03/d3ctf-ezjava/3.png">
 <meta property="article:published_time" content="2023-05-03T15:39:33.000Z">
-<meta property="article:modified_time" content="2023-05-04T12:56:13.802Z">
+<meta property="article:modified_time" content="2023-05-04T13:02:34.847Z">
 <meta property="article:author" content="Pupi1">
 <meta property="article:tag" content="Web,CTF,X1cT34m,NJUPT">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
 <p>这个题的预期是利用题目给的Result类，通过这个类完成到tostring的调用。难点应该就是如何去构造2个类不同但是hashcode相同。<del>目前还没有发现怎么构造，有研究的师傅欢迎来找我讨论一下（</del></p>
 <p>已经成功复现了，前来更新一下</p>
 <p><img src="/2023/05/03/d3ctf-ezjava/1.png" alt="image-20230504204757306"></p>
-<p>因为这里的限制不能用常规的直接2个map的value去触发equals然后可以注意到这个类的message这个变量是object类型，然后在该类的tostring中会触发StringBuilder的append方法。然后这个方法中会调用</p>
+<p>因为这里的限制不能用常规的直接2个map的value去触发o对象的tostring然后可以注意到这个类的message这个变量是object类型，然后在该类的tostring中会触发StringBuilder的append方法。然后这个方法中会调用</p>
 <p><img src="/2023/05/03/d3ctf-ezjava/2.png" alt="image-20230504205254736"></p>
 <p><img src="/2023/05/03/d3ctf-ezjava/3.png" alt="image-20230504205329174"></p>
 <p>这个位置就可以出发JSONObject的Tostring方法了，然后后续的调用不变即可</p>
