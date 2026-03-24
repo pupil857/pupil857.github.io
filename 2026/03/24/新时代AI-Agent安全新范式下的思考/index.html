@@ -1,0 +1,1048 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.svg">
+  <link rel="icon" href="/img/favicon.svg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#17354a">
+  <meta name="author" content="Pupi1">
+  <meta name="keywords" content="Security Research,Java Security,AI Security,CTF">
+  
+    <meta name="description" content="新时代 AI Agent 安全：一个安全从业者近期的几点思考最近这段时间，我花了些时间在看和写各种 Agent，和各家的安全实践。 看得越多，我越觉得一件事很明显：Agent 安全已经不能只按“大模型安全”的思路来理解了。 以前我们谈大模型安全，更多会盯着两个点。一个是 prompt injection，一个是输出内容是否合规。这个角度当然还重要，但如果放到今天很多真正能“干活”的 Agent 身">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新时代 AI Agent 安全：一个安全从业者近期的几点思考">
+<meta property="og:url" content="https://pupil857.github.io/2026/03/24/%E6%96%B0%E6%97%B6%E4%BB%A3AI-Agent%E5%AE%89%E5%85%A8%E6%96%B0%E8%8C%83%E5%BC%8F%E4%B8%8B%E7%9A%84%E6%80%9D%E8%80%83/">
+<meta property="og:site_name" content="Pupi1&#39;s Blog">
+<meta property="og:description" content="新时代 AI Agent 安全：一个安全从业者近期的几点思考最近这段时间，我花了些时间在看和写各种 Agent，和各家的安全实践。 看得越多，我越觉得一件事很明显：Agent 安全已经不能只按“大模型安全”的思路来理解了。 以前我们谈大模型安全，更多会盯着两个点。一个是 prompt injection，一个是输出内容是否合规。这个角度当然还重要，但如果放到今天很多真正能“干活”的 Agent 身">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-24T15:30:57.000Z">
+<meta property="article:modified_time" content="2026-03-24T17:20:26.528Z">
+<meta property="article:author" content="Pupi1">
+<meta property="article:tag" content="AI Security">
+<meta property="article:tag" content="Security Research">
+<meta property="article:tag" content="Agent Security">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>新时代 AI Agent 安全：一个安全从业者近期的几点思考 | Pupi1&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"pupil857.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 55vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Pupi1</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>链接</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/links/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>链接</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/site-hero-post.svg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.15)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="新时代 AI Agent 安全：一个安全从业者近期的几点思考"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-24 23:30" pubdate>
+          2026-03-24 23:30
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">新时代 AI Agent 安全：一个安全从业者近期的几点思考</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="新时代-AI-Agent-安全：一个安全从业者近期的几点思考"><a href="#新时代-AI-Agent-安全：一个安全从业者近期的几点思考" class="headerlink" title="新时代 AI Agent 安全：一个安全从业者近期的几点思考"></a>新时代 AI Agent 安全：一个安全从业者近期的几点思考</h1><p>最近这段时间，我花了些时间在看和写各种 Agent，和各家的安全实践。</p>
+<p>看得越多，我越觉得一件事很明显：Agent 安全已经不能只按“大模型安全”的思路来理解了。</p>
+<p>以前我们谈大模型安全，更多会盯着两个点。一个是 prompt injection，一个是输出内容是否合规。这个角度当然还重要，但如果放到今天很多真正能“干活”的 Agent 身上，就明显不够用了。因为它们已经不只是回答问题了，它们会查知识库，会调 API，会读网页，会写状态，甚至会真正去执行动作。</p>
+<p>所以，作为一个安全从业者，我现在越来越倾向于把 Agent 看成一个任务执行系统，而不是一个会聊天的大模型外壳。这个视角一变，很多安全判断也会跟着变。</p>
+<span id="more"></span>
+
+<h2 id="一、AI-Agent-的基本组成"><a href="#一、AI-Agent-的基本组成" class="headerlink" title="一、AI Agent 的基本组成"></a>一、AI Agent 的基本组成</h2><p>我觉得很多关于 Agent 安全的讨论，一上来就容易掉进一个误区，就是默认 Agent 只是“模型 + prompt + tool call”。</p>
+<p>但如果你真的去拆一个能跑起来的 Agent，会发现事情远不止这么简单。它至少会包含下面这些部分：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>它在做什么</th>
+<th>安全上容易出什么问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入入口</td>
+<td>接收用户请求、业务事件、API 调用、多模态内容</td>
+<td>恶意输入、伪造任务、跨渠道注入</td>
+</tr>
+<tr>
+<td>目标与指令层</td>
+<td>定义角色、目标、约束和系统规则</td>
+<td>策略污染、越权指令、提示词被覆盖</td>
+</tr>
+<tr>
+<td>推理与规划核心</td>
+<td>理解目标、拆任务、决定下一步做什么</td>
+<td>概率性误判、危险路径选择、错误放大</td>
+</tr>
+<tr>
+<td>编排控制循环</td>
+<td>把推理、工具调用、状态推进串成闭环</td>
+<td>死循环、异常重试、错误扩散</td>
+</tr>
+<tr>
+<td>记忆与状态</td>
+<td>保存上下文、长期记忆、任务状态</td>
+<td>记忆投毒、跨用户污染、越权复用</td>
+</tr>
+<tr>
+<td>知识与检索</td>
+<td>从知识库、网页、数据库里拿信息</td>
+<td>检索投毒、敏感信息带出、结果误用</td>
+</tr>
+<tr>
+<td>工具与外部系统</td>
+<td>调 API、查库、发消息、跑浏览器、执行代码</td>
+<td>权限扩张、工具滥用、供应链风险</td>
+</tr>
+<tr>
+<td>输出与反馈</td>
+<td>给用户结果，或把结果送回下一轮继续推理</td>
+<td>误执行、误触发、错误反馈闭环</td>
+</tr>
+<tr>
+<td>运行底座</td>
+<td>框架、运行时、会话管理、沙箱、执行器</td>
+<td>身份混淆、隔离失效、审计缺失</td>
+</tr>
+</tbody></table>
+<p>也就是说，Agent 从来都不是一个单点能力，它更像是一条会持续接收信息、持续做判断、持续调用外部能力的执行链。</p>
+<h2 id="二、AI-Agent-的通用结构"><a href="#二、AI-Agent-的通用结构" class="headerlink" title="二、AI Agent 的通用结构"></a>二、AI Agent 的通用结构</h2><p>下面这张图，是我这段时间看各类 Agent 之后，觉得比较通用的一种抽象。它不属于某一家厂商，但基本能覆盖今天大部分 Agent 系统的关键部件。</p>
+<pre><code class=" mermaid">flowchart TD
+    U[用户 / 业务系统 / 外部事件] --&gt; I[输入入口&lt;br/&gt;Chat / API / Event]
+
+    I --&gt; G[目标与指令层&lt;br/&gt;System Prompt / Role / Policy / Task]
+    G --&gt; R[推理与规划核心&lt;br/&gt;LLM 理解意图 / 任务分解 / 决策]
+
+    R &lt;--&gt; M[记忆与状态&lt;br/&gt;短期记忆 / 长期记忆 / 会话状态]
+    R &lt;--&gt; K[知识与检索&lt;br/&gt;RAG / 文档库 / 业务知识]
+
+    R --&gt; O[编排控制循环&lt;br/&gt;多轮执行 / 路由 / 重试 / 退出条件]
+    O --&gt; T[工具与外部系统&lt;br/&gt;API / 数据库 / 搜索 / Browser / Code]
+
+    T --&gt; F[执行结果与环境反馈]
+    F --&gt; O
+    O --&gt; A[输出与行动&lt;br/&gt;回答用户 / 调用系统 / 触发流程]
+    A --&gt; U
+
+    subgraph P[运行底座]
+        AF[Agent Framework&lt;br/&gt;LangGraph / ADK / Strands / SDK]
+        AR[Agent Runtime&lt;br/&gt;State / Session / Worker / Sandbox]
+        MR[Model Runtime&lt;br/&gt;OpenAI / Bedrock / Vertex / 自托管模型]
+    end
+
+    I -.依赖.-&gt; AF
+    O -.运行在.-&gt; AR
+    R -.调用.-&gt; MR
+</code></pre>
+
+<p>这张图真正提醒我的，不是“组件很多”这件事，而是 Agent 的很多环节都会继续反过来影响下一步决策。</p>
+<p>输入会影响推理。</p>
+<p>检索会影响推理。</p>
+<p>工具返回结果会影响推理。</p>
+<p>记忆会影响推理。</p>
+<p>环境反馈还是会影响推理。</p>
+<p>所以从安全角度看，Agent 不是一次请求处理完就结束的系统，而是一个不断吸收输入、不断改变状态的系统。</p>
+<h2 id="三、AI-Agent-安全不只是提示词安全"><a href="#三、AI-Agent-安全不只是提示词安全" class="headerlink" title="三、AI Agent 安全不只是提示词安全"></a>三、AI Agent 安全不只是提示词安全</h2><p>如果只把 Agent 看成一个大模型，那安全工作就很容易收缩成两件事：防注入，管输出。</p>
+<p>但问题在于，今天很多 Agent 已经不是“说完就结束”了，而是“说完之后还会继续做”。一旦进入这个阶段，风险就会明显变样。</p>
+<p>现在更关注下面几类问题：</p>
+<ul>
+<li>输入入口会不会被恶意任务或伪造指令污染。</li>
+<li>指令层会不会被覆盖，导致原本的边界慢慢漂移。</li>
+<li>检索、记忆和历史上下文会不会把错误内容持续带进系统。</li>
+<li>工具调用会不会把一次错误判断放大成真实动作。</li>
+<li>运行时和沙箱设计不当时，模型层问题会不会直接外溢到主机、网络和业务系统。</li>
+</ul>
+<p>换句话说，<strong>Agent 安全已经并不是单点的防护，而是一个覆盖整个运行链路的系统级问题。</strong></p>
+<h2 id="四、传统应用安全在-AI-Agent-时代面临的挑战"><a href="#四、传统应用安全在-AI-Agent-时代面临的挑战" class="headerlink" title="四、传统应用安全在 AI Agent 时代面临的挑战"></a>四、传统应用安全在 AI Agent 时代面临的挑战</h2><p>在传统 Web 应用、移动应用或者 SaaS 系统里，很多安全设计默认成立的前提其实比较稳定，都是由一个确定的输入得到一个确定的输出：流程大体固定，调用边界相对清楚，用户自己显式触发敏感动作，输入点也比较集中，日志通常能覆盖主要问题。可一旦系统开始引入 Agent，这些前提就会一层层松动。</p>
+<p>先看一个直观一点的对比：</p>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>传统应用安全假设</th>
+<th>Agent 系统中的变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>行为路径</td>
+<td>流程固定、接口可枚举</td>
+<td>路径动态、推理驱动、难以完全枚举</td>
+</tr>
+<tr>
+<td>权限控制</td>
+<td>用户直接操作，应用内校验为主</td>
+<td>Agent 代执行，需要跨链路委托控制</td>
+</tr>
+<tr>
+<td>调用对象</td>
+<td>固定服务依赖</td>
+<td>动态工具、MCP、外部系统持续扩展</td>
+</tr>
+<tr>
+<td>输入风险</td>
+<td>主要来自用户输入</td>
+<td>用户输入、工具返回、记忆、检索内容共同构成上下文风险</td>
+</tr>
+<tr>
+<td>结果风险</td>
+<td>回答错误、内容违规、信息泄露</td>
+<td>进一步扩展到真实动作执行和业务后果</td>
+</tr>
+<tr>
+<td>运行环境</td>
+<td>边界相对稳定</td>
+<td>运行时更开放，包含浏览器、沙盒、代码执行等新环境</td>
+</tr>
+<tr>
+<td>审计方式</td>
+<td>接口日志和数据库日志即可覆盖大部分问题</td>
+<td>需要覆盖推理、检索、工具调用、授权、执行与回放全链路</td>
+</tr>
+</tbody></table>
+<p>从这个对比里其实能看出一个很重要的点：传统安全体系并不是失效了，而是覆盖范围不够了。</p>
+<p>身份认证、权限控制、网络隔离、日志审计、数据安全、漏洞管理，这些东西当然还都要做，而且一个都不能少。</p>
+<p>问题在于，<strong>Agent 改变了系统运行的基本形态</strong>。传统应用里很多原本默认成立的安全假设，到了 Agent 环境下已经不再那么稳了。</p>
+<ol>
+<li><p><strong>从确定性流程，变成概率性决策</strong></p>
+<p>传统应用的大部分执行路径是预定义的。用户点击哪个按钮，触发哪个接口，后端按什么规则处理，通常都比较确定，也比较容易枚举。</p>
+<p>但 Agent 不是这样。Agent 的核心行为来自模型推理，而由于现在llm的原理，导致推理本身就具有概率性。</p>
+<ul>
+<li>同一个目标，Agent 可能拆解成不同的任务路径。</li>
+<li>同一个问题，Agent 可能选择不同工具、不同顺序、不同参数。</li>
+<li>同一个上下文，在不同模型版本或不同提示条件下，决策结果也可能变化。</li>
+</ul>
+<p>这意味着安全问题不再只是“某个接口有没有权限校验”，还要回答“Agent 会不会在动态决策中走到一条原本没预想到的危险路径”，不能复用通过传统安全中的白名单思路来一劳永逸。</p>
+</li>
+<li><p><strong>从固定接口调用，变成动态工具编排</strong></p>
+<p>过去的应用依赖通常比较固定，前端调哪些后端接口，后端依赖哪些微服务，服务之间依赖关系相对清晰，边界大体都清楚。</p>
+<p>但在 Agent 系统中，工具调用往往是动态选择的。</p>
+<ul>
+<li>Agent 会根据上下文自主决定调用哪个工具</li>
+<li>一个工具的结果又会触发下一轮工具选择</li>
+<li>工具集合可能持续扩展，包括内部 API、MCP server、数据库、SaaS、浏览器和代码执行环境</li>
+</ul>
+<p>这使得攻击面从“接口安全”扩展为“工具链安全”。风险也从单次 API 越权，上升为整条执行链路中的权限扩张、供应链污染和间接注入。</p>
+</li>
+<li><p><strong>从用户直接操作，变成 Agent 代理执行。</strong></p>
+<p>传统应用中，大多数敏感操作都由用户显式触发，谁发起、谁确认、谁负责，关系相对清楚。</p>
+<ul>
+<li>用户自己发起查询</li>
+<li>用户自己点击审批</li>
+<li>用户自己提交删除</li>
+</ul>
+<p>因此传统安全设计主要围绕“用户是谁”，“用户能不能做这个动作”展开。</p>
+<p>到了 Agent 时代，情况发生了变化。用户越来越多地不是直接操作系统，而是把目标交给 Agent，由 Agent 代为规划和执行。</p>
+<ul>
+<li>用户说“帮我整理今天的待办并发给团队”</li>
+<li>用户说“查询客户信息并生成一份跟进建议”</li>
+<li>用户说“根据合同内容起草回复邮件并发送”</li>
+</ul>
+<p>这时，真正执行动作的是 Agent，而不是用户的显式点击。所以这里的安全设计就不能只停留在“用户有没有权限”，还得继续往下看：Agent 能不能只在用户授权范围内代表用户行动。</p>
+</li>
+<li><p><strong>从静态权限控制，变成委托链路控制</strong></p>
+<p>传统权限模型通常只需要处理一段较短的链路：</p>
+<p><code>用户 -&gt; 应用 -&gt; 数据库</code></p>
+<p>而在 Agent 系统中，链路会迅速拉长：</p>
+<p><code>用户 -&gt; Agent -&gt; 编排层 -&gt; 工具网关 -&gt; 下游服务 -&gt; 数据系统 -&gt; 外部系统</code></p>
+<p>这会带来几个新的安全难点：</p>
+<ul>
+<li>身份如何跨多个组件连续传递</li>
+<li>下游系统如何识别最终用户，而不是只看到 Agent 服务账号</li>
+<li>Agent 是否会在调用链中获得比用户本身更高的权限</li>
+<li>多租户环境中，跨租户边界是否会在工具编排阶段被破坏</li>
+</ul>
+<p>也就是说，Agent 安全中的“权限”已经不只是一个应用内的访问控制问题，而是一个跨多层系统的委托控制问题。</p>
+</li>
+<li><p><strong>从数据输入风险，扩展为上下文污染风险</strong></p>
+<p>传统应用确实也面对输入风险，比如 SQL 注入、XSS、文件上传攻击，但其风险面主要集中在显式输入和明确的数据边界上。</p>
+<p>Agent 系统则不一样。它的输入范围远比传统应用更广：</p>
+<ul>
+<li>用户输入</li>
+<li>系统提示词</li>
+<li>工具描述</li>
+<li>工具返回内容</li>
+<li>检索文档</li>
+<li>长期记忆</li>
+<li>历史对话</li>
+<li>外部网页</li>
+</ul>
+<p>这些内容都会进入 Agent 的推理上下文。一旦这里面任何一部分被污染，影响的就不只是某个字段或某次请求，而可能是整个决策链。所以这类问题更应该是“上下文污染”和“上下文治理”，而不只是传统意义上的输入校验。</p>
+</li>
+<li><p><strong>从边界清晰系统，变成开放耦合系统</strong></p>
+<p>传统企业应用通常边界相对稳定。</p>
+<ul>
+<li>业务系统之间的依赖关系清楚</li>
+<li>接口和角色模型相对固定</li>
+<li>环境通常是内聚的、可控的</li>
+</ul>
+<p>而 Agent 系统天然倾向于开放耦合：</p>
+<ul>
+<li>接入更多第三方工具和 SaaS</li>
+<li>引入 MCP、插件、远程浏览器、外部搜索</li>
+<li>通过知识库和网页检索动态吸收外部信息</li>
+<li>强烈的 Agent 自身的自我进化需求</li>
+</ul>
+<p>这使得安全模型必须从“保护一个封闭系统”，转向“管理一个持续变化的开放执行网络”。</p>
+</li>
+<li><p><strong>从结果输出安全，变成执行后果安全</strong></p>
+<p>传统大模型应用早期主要关注回答是否合规、是否有害、是否泄露隐私。这些问题当然仍然重要，但在 Agent 场景里，它们已经不是全部。</p>
+<p>因为 Agent 不只是“说”，它还会“做”。</p>
+<ul>
+<li>它会查数据库</li>
+<li>它会打开网页</li>
+<li>它会调用 API</li>
+<li>它会运行脚本</li>
+<li>它会发邮件、提工单、触发审批</li>
+</ul>
+<p>这意味着安全问题的重心会从“输出内容本身是否安全”，进一步转向“执行动作及其后果是否可控”。</p>
+<p>一句话概括就是：</p>
+<p><strong>在传统应用里，系统主要承担的是信息处理风险；在 Agent 应用里，系统开始承担行动执行风险。</strong></p>
+</li>
+</ol>
+<h2 id="五、Agent-时代，安全重心正在发生变化"><a href="#五、Agent-时代，安全重心正在发生变化" class="headerlink" title="五、Agent 时代，安全重心正在发生变化"></a>五、Agent 时代，安全重心正在发生变化</h2><p>在 Agent 时代面临的这些关键的安全问题，在学习了很多大佬的思路后，目前针对Agent 安全时代下最重要的几个安全能力，提出一些自己的拙见</p>
+<h3 id="一、Agent-的身份验证与委托授权（Agent-Identity）"><a href="#一、Agent-的身份验证与委托授权（Agent-Identity）" class="headerlink" title="一、Agent 的身份验证与委托授权（Agent Identity）"></a>一、Agent 的身份验证与委托授权（Agent Identity）</h3><p>在 AI 时代，Agent 场景下最容易发生的问题就是<strong>混淆身份与委托越权</strong></p>
+<p>而身份上最容易出现的问题其实不是“用户有没有登录”，而是“当前到底是谁在代表谁做事”。</p>
+<p>传统应用里，用户通常直接操作系统，身份链路相对简单，应用只需要校验当前用户是否有权限访问某个接口、某份数据、某个按钮即可。</p>
+<p>但在 Agent 场景里，情况发生了变化。用户越来越多是把目标交给 Agent，再由 Agent 去访问工具、获取数据、调用系统、执行动作。这个时候，系统需要校验的就不再只是“用户有没有权限”，而是整条链路上的身份和授权关系：</p>
+<ul>
+<li>用户是否有权发起这个代理请求</li>
+<li>Agent 是否有权代表该用户去调用某个工具或服务</li>
+<li>下游工具或服务是否能够识别 Agent 代表的是哪一个真实用户</li>
+<li>工具返回的数据是否是该用户本来就有权访问的数据</li>
+</ul>
+<p>也就是说，在 Agent 时代，身份验证必须从单点登录校验，升级为<strong>端到端的全链路委托授权</strong>。</p>
+<p>而这一部分的安全建设至少要包括以下几个方面：</p>
+<ol>
+<li><strong>Agent 入方向的认证和授权</strong></li>
+</ol>
+<p>对要求进行代理的用户进行认证和授权，包括通过第三方身份提供商登录进来的用户。系统要明确知道是谁发起了请求、请求的目标是什么、是否允许 Agent 代为执行。</p>
+<ol start="2">
+<li><strong>外部工具或服务对 Agent 的授权</strong></li>
+</ol>
+<p>不论是企业内部研发的一方工具，还是第三方商业化工具、开源工具，都不能默认信任 Agent。工具端必须承担认证和授权职责，同样需要判断：当前这个 Agent，和这个 Agent 所代表的用户，是否被允许访问该工具及其对应数据。</p>
+<ol start="3">
+<li><strong>Agent 出方向访问能力的约束</strong></li>
+</ol>
+<p>为了配合外部工具或服务完成授权，Agent 本身需要具备标准化的受控访问能力，例如 OAuth 客户端能力，包括 2LO 和 3LO 两种模式。如果访问的是云资源，则需要具备获取和使用短期凭证的能力，例如 IAM Role 或 STS，而不是长期持有固定密钥。</p>
+<h3 id="二、Agent-的专用沙箱和受控执行环境-（Agent-Sandbox）"><a href="#二、Agent-的专用沙箱和受控执行环境-（Agent-Sandbox）" class="headerlink" title="二、Agent 的专用沙箱和受控执行环境 （Agent Sandbox）"></a>二、Agent 的专用沙箱和受控执行环境 （Agent Sandbox）</h3><p>在 Agent 的执行范式下，安全风险的重心正在发生明显变化。</p>
+<p>过去我们更关注的是输出内容本身是否安全，例如：</p>
+<ul>
+<li>回答是否有害</li>
+<li>是否泄露敏感信息</li>
+<li>是否包含不当内容</li>
+</ul>
+<p>但在 Agent 时代，仅仅关注“说了什么”已经不够，因为 Agent 开始真正“做事情”了。</p>
+<ul>
+<li>它会访问网页</li>
+<li>它会执行脚本</li>
+<li>它会下载和上传文件</li>
+<li>它会操作浏览器</li>
+<li>它会调用系统接口</li>
+</ul>
+<p>也正因为如此，<strong>安全问题开始从 “输出内容安全” 转向 “执行结果是否可接受、是否可控、是否可追责 ”</strong>。</p>
+<p>所以Agent 一旦进入执行态，就必须被当作一个高动态、高权限敏感、高不确定性的自动化工作负载来管理。所有会造成高危结果，线上生产变更的行为都必须由人来卡控。对这样的东西，专用沙箱不是加分项，而是基本盘。</p>
+<p>至少应该做到：</p>
+<ul>
+<li>将 Agent 的执行环境与主业务系统隔离</li>
+<li>将不同用户、不同任务、不同会话的执行过程隔离</li>
+<li>限制 Agent 的文件系统、网络、浏览器和命令执行能力</li>
+<li>在任务结束后自动清理临时文件、凭证和会话状态</li>
+<li>在发生异常时可以快速终止执行并保留审计证据</li>
+</ul>
+<p>因为一旦没有这层隔离，模型层的误判就很容易直接变成执行层事故。</p>
+<h3 id="三、-Agent-执行全流程的可发现、可观测、可管控、可审计"><a href="#三、-Agent-执行全流程的可发现、可观测、可管控、可审计" class="headerlink" title="三、 Agent 执行全流程的可发现、可观测、可管控、可审计"></a>三、 Agent 执行全流程的可发现、可观测、可管控、可审计</h3><p>无论是身份验证还是沙箱隔离，最终都会指向一个更底层的问题：企业是否真的知道哪里有 Agent、这些 Agent 在做什么、它们连了什么、能做什么，以及企业是否真的有能力在关键时刻把它控制住，并在事后完整追溯每一环。</p>
+<p>首先是 <strong>可发现</strong>。企业必须先知道系统里到底有哪些 Agent 资产存在，它们分别服务于什么业务场景，接入了哪些工具、知识库和外部系统，又具备怎样的执行能力和权限边界。</p>
+<ul>
+<li>发现有哪些 Agent 正在运行</li>
+<li>发现它们服务于哪些业务流程</li>
+<li>发现它们接入了哪些工具、数据源和外部系统</li>
+<li>发现它们具备哪些执行能力和权限范围</li>
+<li>发现新接入的 Agent 或能力是否已经超出原有治理范围</li>
+</ul>
+<p>其次是 <strong>可观测</strong>。企业必须知道：</p>
+<ul>
+<li>Agent 当前接收了什么输入</li>
+<li>当前使用了哪些上下文</li>
+<li>进行了怎样的任务拆解</li>
+<li>调用了哪些工具</li>
+<li>最终输出了什么动作和结果</li>
+</ul>
+<p>再次是 <strong>可管控</strong>。企业必须能够：</p>
+<ul>
+<li>决定哪些工具可以被调用</li>
+<li>决定哪些内容可以进入主推理链</li>
+<li>决定哪些高风险动作需要人工确认</li>
+<li>在异常情况下中断、降级或接管 Agent</li>
+</ul>
+<p>最后是 <strong>可审计</strong>。企业必须能够在事后回答：</p>
+<ul>
+<li>谁发起了这个任务</li>
+<li>Agent 当时代表的是谁</li>
+<li>它为什么调用了这个工具</li>
+<li>哪个上下文影响了它的决策</li>
+<li>问题最终发生在哪一个环节</li>
+</ul>
+<p>如果缺少这四项能力，Agent 系统即使在功能上能够跑起来，在安全上也仍然是一个黑盒。它可能看起来很聪明，但一旦出错，企业既无法及时干预，也无法在事后完成责任界定和经验回收。</p>
+<p>因此，站在生产环境的角度看，Agent 最先要重建的不是某一条具体规则，而是一整套围绕身份、执行、工具和审计建立起来的基础安全能力。</p>
+<h2 id="六、AI-Agent-安全新范式下的前瞻思考"><a href="#六、AI-Agent-安全新范式下的前瞻思考" class="headerlink" title="六、AI Agent 安全新范式下的前瞻思考"></a>六、AI Agent 安全新范式下的前瞻思考</h2><p>前文探讨的诸多安全设计，更多是聚焦于为 AI Agent 构建运行前的“默认安全”环境。其实在aws的博客中提到的基于Agentic AI的特性总结的安全威胁中有个很有意思的2个点：</p>
+<ul>
+<li>Overwhelming Human in the Loop：这种威胁针对的是具有人类监督和决策验证的系统，旨在利用人类的认知局限性或破坏交互框架。</li>
+<li>Human Manipulation：在Agentic AI与人类用户直接交互的场景中，信任关系会降低用户的怀疑程度，增强对Agent响应和自主性的依赖。这种隐性信任和人机直接交互会带来风险，因为攻击者可以胁迫Agent操纵用户、传播虚假信息并采取隐蔽行动。</li>
+</ul>
+<p>这两点深刻揭示了一个反直觉的现象：在复杂的 Agent 系统中，<strong>过度依赖人类监督反而可能成为安全链条中最脆弱的一环</strong>。</p>
+<p>但其实这也是很现实的一点，类比于现在AI Coding的发展中，代码生成的效率瓶颈早已不再是 AI 的算力或吞吐量，而是人类开发者根本无法跟上 Review 的节奏来验证代码是否符合预期。当 AI 生成海量代码时，必然会逐渐演变为“用 AI 来 Review AI 生成的代码”。在这个过程中，人类最终退居二线，仅负责审计高价值的简短摘要，而大量底层的实现细节则被隐匿。</p>
+<p>我对这种趋势其实并不持负面态度。相反，在 AI 技术高速迭代的今天，我认为这必然会成为主流范式。人类对 AI 的信任度将会不断攀升，最终人类的角色将全面转向<strong>审计高价值、高信息密度的数据</strong>。</p>
+<p>然而，正是在这种高度信任、高度依赖的背景下，我们愈发的要对这类新型威胁建立更加严密的防范机制，需要在 HITL（Human-in-the-Loop） 的决策中为人类提供足够丰富且精准的上下文信息以保护决策质量，并从机制上预防“决策疲劳”漏洞，防止攻击者通过欺骗性的 AI 行为使人类超负荷运转、操纵 AI 意图或绕过现有的安全机制。</p>
+<p>此外，由于 LLM本质上仍是一个黑盒的程序，安全防护的重心必须向 <strong>Agent 运行时的动态表现、决策过程和最终结果</strong>转移。综合上述思考可以发现，除了基础设施的安全加固，Agent 安全的核心其实在于运行时上下文 。上下文直接决定了 Agent 后续的决策与行为。只有让安全机制深度介入运行时上下文，才能准确分辨 Agent 的动作是否偏离了全局任务目标和预设职责。</p>
+<p>而在传统应用安全领域，<strong>RASP（运行时应用自我保护）</strong>  技术被广泛用于应用运行时的实时防护。那么，在 Agent 安全体系中，我们完全可以借鉴 RASP 的核心理念，构建针对 AI Agent 的“运行时实时检测与防护”机制（即 <strong>Agent-RASP</strong>）。这种机制不仅能够完成实时监测，甚至可以深度介入 Agent 的运行状态，进行实时的行为检测，纠偏和高危恶意指令的即时阻断等等操作。</p>
+<p>我相信，<strong>基于运行时的动态上下文安全防护，一定会成为新时代 AI Agent 安全防御矩阵中重要的一环。</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI-Security/" class="print-no-link">#AI Security</a>
+      
+        <a href="/tags/Security-Research/" class="print-no-link">#Security Research</a>
+      
+        <a href="/tags/Agent-Security/" class="print-no-link">#Agent Security</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/08/%E5%AE%9E%E4%B9%A0%E5%B0%8F%E7%BB%93/" title="实习小结">
+                        <span class="hidden-mobile">实习小结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>© Pupi1</span> <span class="mx-1">|</span> <span>Built with Hexo and Fluid</span> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
