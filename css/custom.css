@@ -1,0 +1,54 @@
+body {
+  background:
+    radial-gradient(circle at top left, rgba(231, 190, 95, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(56, 118, 155, 0.18), transparent 28%),
+    linear-gradient(180deg, #f7f1e6 0%, #f2ece2 100%);
+}
+
+.navbar {
+  box-shadow: 0 10px 30px rgba(12, 34, 47, 0.12);
+}
+
+.banner .mask {
+  backdrop-filter: saturate(120%);
+}
+
+.index-card,
+.board,
+.post-content,
+.pagination,
+.page .board,
+.archive .list-group {
+  border-radius: 22px;
+}
+
+.board-wrap .board {
+  box-shadow: 0 22px 70px rgba(23, 53, 74, 0.09);
+}
+
+.post-content {
+  line-height: 1.85;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  letter-spacing: 0.01em;
+}
+
+.post-content pre,
+.post-content .code-wrapper {
+  border-radius: 16px;
+}
+
+.navbar .nav-item a,
+.navbar .navbar-brand {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.index-header-content .subtitle,
+.banner-text .subtitle {
+  max-width: 720px;
+}
